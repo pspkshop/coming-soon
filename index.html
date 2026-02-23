@@ -7,210 +7,290 @@
   <meta name="keywords" content="PSPK, pspk, ps pk, Pspk, PSpk, PspK, pspk shop, pspkshop, pspk.shop, coming soon"/>
   <meta name="robots" content="index, follow"/>
   <meta name="author" content="PSPK"/>
-
-  <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://pspk.shop"/>
   <meta property="og:title" content="PSPK — Coming Soon"/>
   <meta property="og:description" content="Something big is coming. Stay tuned."/>
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary"/>
   <meta name="twitter:url" content="https://pspk.shop"/>
   <meta name="twitter:title" content="PSPK — Coming Soon"/>
   <meta name="twitter:description" content="Something big is coming. Stay tuned."/>
-  
-  <!-- Canonical URL -->
   <link rel="canonical" href="https://pspk.shop"/>
-  
   <title>PSPK — Coming Soon</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-
-    :root {
-      --gold: #c9922a;
-      --gold-light: #f0c96a;
-      --gold-dark: #b8821e;
-      --bg: #000000;
-      --text-muted: #888;
-    }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html, body {
-      width: 100%; height: 100%;
-      background: var(--bg);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width:100%; height:100%;
+      background:#000;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
     }
+    #bg-particles { position:fixed; inset:0; z-index:0; pointer-events:none; }
 
-    /* ── Particle Canvas ── */
-    #particles {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* ── Main Wrapper ── */
-    .wrapper {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      animation: masterFade 1.8s cubic-bezier(.4,0,.2,1) 0.3s forwards;
-    }
-
-    @keyframes masterFade {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Star ── */
     .star-wrap {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position:relative; z-index:1;
+      width:320px; height:320px;
+      display:flex; align-items:center; justify-content:center;
+      animation: floatY 5s ease-in-out infinite, entrance 1.4s cubic-bezier(.2,0,.2,1) both;
+    }
+    @keyframes floatY {
+      0%,100% { transform:translateY(0); }
+      50%      { transform:translateY(-12px); }
+    }
+    @keyframes entrance {
+      from { opacity:0; transform:scale(0.2) rotate(-20deg); }
+      to   { opacity:1; transform:scale(1)   rotate(0deg);   }
+    }
+    .star-wrap svg {
+      width:100%; height:100%; overflow:visible;
+      filter:
+        drop-shadow(0 0 50px rgba(220,170,40,0.55))
+        drop-shadow(0 0 100px rgba(180,130,20,0.25))
+        drop-shadow(0 30px 50px rgba(0,0,0,0.95));
     }
 
-    .star-halo {
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(201,146,42,0.18) 0%, transparent 70%);
-      animation: haloBreath 4s ease-in-out infinite;
-    }
-
-    @keyframes haloBreath {
-      0%, 100% { transform: scale(1);   opacity: 0.6; }
-      50%       { transform: scale(1.3); opacity: 1;   }
-    }
-
-    .star {
-      width: 110px;
-      height: 110px;
-      background: linear-gradient(145deg, var(--gold-light), var(--gold), var(--gold-dark));
-      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-      animation: starGlow 4s ease-in-out infinite alternate, starSpin 0.8s cubic-bezier(.4,0,.2,1) both;
-      filter: drop-shadow(0 0 16px rgba(201,146,42,0.5));
-    }
-
-    @keyframes starSpin {
-      from { transform: rotate(-40deg) scale(0.5); opacity: 0; }
-      to   { transform: rotate(0deg)  scale(1);   opacity: 1; }
-    }
-
-    @keyframes starGlow {
-      from { filter: drop-shadow(0 0 8px  rgba(201,146,42,0.4)); }
-      to   { filter: drop-shadow(0 0 30px rgba(240,201,106,1.0)); }
-    }
-
-    /* ── Vertical Line ── */
     .line {
-      width: 1px;
-      height: 0;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: lineGrow 1.2s cubic-bezier(.4,0,.2,1) 1s forwards;
+      position:relative; z-index:1;
+      width:1px; height:0;
+      background:linear-gradient(to bottom,#c9922a,transparent);
+      animation:lineGrow 1s ease 1.8s forwards;
     }
+    @keyframes lineGrow { to { height:90px; opacity:1; } }
 
-    @keyframes lineGrow {
-      from { height: 0;     opacity: 0; }
-      to   { height: 110px; opacity: 1; }
-    }
-
-    /* ── Coming Soon Text ── */
     .tagline {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 200;
-      font-size: clamp(10px, 1.5vw, 14px);
-      letter-spacing: 0.65em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      margin-top: 36px;
-      opacity: 0;
-      animation: textReveal 1.2s ease 1.8s forwards;
-      text-indent: 0.65em;
+      position:relative; z-index:1;
+      font-family:'Montserrat',sans-serif;
+      font-weight:200;
+      font-size:clamp(10px,1.5vw,13px);
+      letter-spacing:0.65em;
+      color:#777;
+      text-transform:uppercase;
+      margin-top:28px;
+      opacity:0;
+      text-indent:0.65em;
+      animation:textReveal 1.4s ease 2.6s forwards;
     }
-
     @keyframes textReveal {
-      from { opacity: 0; letter-spacing: 1.2em; }
-      to   { opacity: 1; letter-spacing: 0.65em; }
+      from { opacity:0; letter-spacing:1.2em; }
+      to   { opacity:1; letter-spacing:0.65em; }
     }
-
-    /* ── Vignette ── */
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
-      pointer-events: none;
-      z-index: 0;
+      content:'';
+      position:fixed; inset:0;
+      background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,0.88) 100%);
+      pointer-events:none; z-index:0;
     }
   </style>
 </head>
 <body>
 
-  <canvas id="particles"></canvas>
+<canvas id="bg-particles"></canvas>
 
-  <div class="wrapper">
-    <div class="star-wrap">
-      <div class="star-halo"></div>
-      <div class="star"></div>
-    </div>
-    <div class="line"></div>
-    <p class="tagline">Coming Soon&hellip;</p>
-  </div>
+<div class="star-wrap">
+  <!--
+    Star points (cx=200,cy=205):
+    Tips r=158:  T0=200,47  T1=350,155  T2=297,328  T3=103,328  T4=50,155
+    Inner r=66:  I0=240,150 I1=263,223  I2=200,268  I3=137,223  I4=160,150
 
-  <script>
-    const canvas = document.getElementById('particles');
-    const ctx    = canvas.getContext('2d');
-    let W, H, particles = [];
+    Light from upper-left → top-left faces = bright cream-gold
+                          → bottom-right faces = deep amber-bronze
+  -->
+  <svg viewBox="0 0 400 410" xmlns="http://www.w3.org/2000/svg">
+    <defs>
 
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
+      <!-- ══ PER-FACE GLOSSY GRADIENTS ══ -->
 
-    function rand(min, max) { return Math.random() * (max - min) + min; }
+      <!-- F0: Left of TOP — most lit, upper-left facing → BRIGHTEST -->
+      <linearGradient id="f0" x1="160" y1="150" x2="200" y2="47" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#f8eea0"/>
+        <stop offset="45%"  stop-color="#e8cc60"/>
+        <stop offset="100%" stop-color="#d4aa40"/>
+      </linearGradient>
 
-    function createParticle() {
-      return {
-        x: rand(0, W),
-        y: rand(0, H),
-        r: rand(0.5, 2.2),
-        alpha: rand(0.1, 0.5),
-        speed: rand(0.1, 0.4),
-        drift: rand(-0.15, 0.15),
-      };
-    }
+      <!-- F1: Right of TOP — upper-right, slightly less lit → BRIGHT -->
+      <linearGradient id="f1" x1="240" y1="150" x2="200" y2="47" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#ddb840"/>
+        <stop offset="50%"  stop-color="#c89a28"/>
+        <stop offset="100%" stop-color="#b88020"/>
+      </linearGradient>
 
-    for (let i = 0; i < 90; i++) particles.push(createParticle());
+      <!-- F2: Left of UPPER-RIGHT — upper-right facing → BRIGHT-MED -->
+      <linearGradient id="f2" x1="240" y1="150" x2="350" y2="155" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#e8c840"/>
+        <stop offset="40%"  stop-color="#cda030"/>
+        <stop offset="100%" stop-color="#b88520"/>
+      </linearGradient>
 
-    function draw() {
-      ctx.clearRect(0, 0, W, H);
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(201, 146, 42, ${p.alpha})`;
-        ctx.fill();
-        p.y -= p.speed;
-        p.x += p.drift;
-        if (p.y < -5) { p.y = H + 5; p.x = rand(0, W); }
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
-  </script>
+      <!-- F3: Right of UPPER-RIGHT — right-facing → MEDIUM -->
+      <linearGradient id="f3" x1="263" y1="223" x2="350" y2="155" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#b07818"/>
+        <stop offset="55%"  stop-color="#905a10"/>
+        <stop offset="100%" stop-color="#6a3e08"/>
+      </linearGradient>
+
+      <!-- F4: Left of LOWER-RIGHT — lower-right → DARK -->
+      <linearGradient id="f4" x1="263" y1="223" x2="297" y2="328" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#8a5a10"/>
+        <stop offset="50%"  stop-color="#6a3e08"/>
+        <stop offset="100%" stop-color="#4a2804"/>
+      </linearGradient>
+
+      <!-- F5: Right of LOWER-RIGHT — lower facing → DARKEST -->
+      <linearGradient id="f5" x1="200" y1="268" x2="297" y2="328" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#6a4010"/>
+        <stop offset="50%"  stop-color="#4a2806"/>
+        <stop offset="100%" stop-color="#2e1400"/>
+      </linearGradient>
+
+      <!-- F6: Left of LOWER-LEFT — lower facing → DARKEST -->
+      <linearGradient id="f6" x1="200" y1="268" x2="103" y2="328" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#6a4010"/>
+        <stop offset="50%"  stop-color="#4a2806"/>
+        <stop offset="100%" stop-color="#2e1400"/>
+      </linearGradient>
+
+      <!-- F7: Right of LOWER-LEFT — lower-left → DARK -->
+      <linearGradient id="f7" x1="137" y1="223" x2="103" y2="328" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#8a5a10"/>
+        <stop offset="50%"  stop-color="#6a3e08"/>
+        <stop offset="100%" stop-color="#4a2804"/>
+      </linearGradient>
+
+      <!-- F8: Left of UPPER-LEFT — left facing → MEDIUM-BRIGHT -->
+      <linearGradient id="f8" x1="137" y1="223" x2="50" y2="155" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#c49030"/>
+        <stop offset="50%"  stop-color="#a87020"/>
+        <stop offset="100%" stop-color="#7a4e10"/>
+      </linearGradient>
+
+      <!-- F9: Right of UPPER-LEFT — upper-left facing → BRIGHT -->
+      <linearGradient id="f9" x1="160" y1="150" x2="50" y2="155" gradientUnits="userSpaceOnUse">
+        <stop offset="0%"   stop-color="#e8cc55"/>
+        <stop offset="40%"  stop-color="#d4a838"/>
+        <stop offset="100%" stop-color="#b88525"/>
+      </linearGradient>
+
+      <!-- ── GLOSSY SHEEN OVERLAY (top-left highlight) ── -->
+      <radialGradient id="sheen" cx="36%" cy="28%" r="48%">
+        <stop offset="0%"   stop-color="rgba(255,255,220,0.55)"/>
+        <stop offset="30%"  stop-color="rgba(255,240,160,0.20)"/>
+        <stop offset="70%"  stop-color="rgba(255,220,80, 0.05)"/>
+        <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+      </radialGradient>
+
+      <!-- ── ANIMATED GLOSSY SWEEP ── -->
+      <linearGradient id="sweep" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"   stop-color="rgba(255,255,220,0)"/>
+        <stop offset="48%"  stop-color="rgba(255,255,220,0)"/>
+        <stop offset="50%"  stop-color="rgba(255,255,220,0.12)"/>
+        <stop offset="52%"  stop-color="rgba(255,255,220,0)"/>
+        <stop offset="100%" stop-color="rgba(255,255,220,0)">
+          <animate attributeName="stop-color"
+            values="rgba(255,255,220,0);rgba(255,255,220,0)"
+            dur="4s" repeatCount="indefinite"/>
+        </stop>
+        <animateTransform attributeName="gradientTransform"
+          type="translate" values="-1,0;1,0;-1,0"
+          dur="4s" repeatCount="indefinite"/>
+      </linearGradient>
+
+    </defs>
+
+    <!-- ══ 10 PREMIUM FACETED FACES ══ -->
+    <polygon points="200,205 160,150 200,47"  fill="url(#f0)"/>
+    <polygon points="200,205 200,47  240,150" fill="url(#f1)"/>
+    <polygon points="200,205 240,150 350,155" fill="url(#f2)"/>
+    <polygon points="200,205 350,155 263,223" fill="url(#f3)"/>
+    <polygon points="200,205 263,223 297,328" fill="url(#f4)"/>
+    <polygon points="200,205 297,328 200,268" fill="url(#f5)"/>
+    <polygon points="200,205 200,268 103,328" fill="url(#f6)"/>
+    <polygon points="200,205 103,328 137,223" fill="url(#f7)"/>
+    <polygon points="200,205 137,223 50,155"  fill="url(#f8)"/>
+    <polygon points="200,205 50,155  160,150" fill="url(#f9)"/>
+
+    <!-- ══ GLOSSY SHEEN OVERLAY ══ -->
+    <polygon points="200,47 240,150 350,155 263,223 297,328 200,268 103,328 137,223 50,155 160,150"
+      fill="url(#sheen)"/>
+
+    <!-- ══ ANIMATED LIGHT SWEEP ══ -->
+    <polygon points="200,47 240,150 350,155 263,223 297,328 200,268 103,328 137,223 50,155 160,150"
+      fill="url(#sweep)" opacity="0.8">
+      <animate attributeName="opacity" values="0;0.9;0" dur="4s" repeatCount="indefinite"/>
+    </polygon>
+
+    <!-- ══ SHARP DARK RIDGE LINES ══ -->
+    <g stroke="#1a0900" stroke-width="1.4" stroke-linecap="round" opacity="0.95">
+      <line x1="200" y1="205" x2="200" y2="47"/>
+      <line x1="200" y1="205" x2="350" y2="155"/>
+      <line x1="200" y1="205" x2="297" y2="328"/>
+      <line x1="200" y1="205" x2="103" y2="328"/>
+      <line x1="200" y1="205" x2="50"  y2="155"/>
+    </g>
+
+    <!-- ══ BRIGHT RIDGE HIGHLIGHTS (upper-left lit ridges) ══ -->
+    <g stroke-linecap="round">
+      <line x1="200" y1="205" x2="200" y2="47"
+        stroke="rgba(255,245,160,0.5)" stroke-width="0.7"/>
+      <line x1="200" y1="205" x2="50"  y2="155"
+        stroke="rgba(255,240,140,0.35)" stroke-width="0.6"/>
+      <line x1="200" y1="205" x2="350" y2="155"
+        stroke="rgba(255,230,100,0.2)" stroke-width="0.5"/>
+    </g>
+
+    <!-- ══ OUTER EDGE BEVEL ══ -->
+    <polygon
+      points="200,47 240,150 350,155 263,223 297,328 200,268 103,328 137,223 50,155 160,150"
+      fill="none"
+      stroke="#1a0800"
+      stroke-width="1.8"
+      stroke-linejoin="round"
+      opacity="0.9"/>
+
+    <!-- subtle bright outer rim on top-left edges -->
+    <polyline
+      points="103,328 137,223 50,155 160,150 200,47 240,150"
+      fill="none"
+      stroke="rgba(255,240,150,0.2)"
+      stroke-width="0.8"
+      stroke-linejoin="round"/>
+
+    <!-- ══ CENTER POINT — where ridges meet ══ -->
+    <circle cx="200" cy="205" r="5"   fill="#c09030" opacity="0.9"/>
+    <circle cx="200" cy="205" r="2.5" fill="#fff5a0" opacity="0.7"/>
+
+  </svg>
+</div>
+
+<div class="line"></div>
+<p class="tagline">Coming Soon&hellip;</p>
+
+<script>
+  // Gold dust particles
+  const c = document.getElementById('bg-particles');
+  const ctx = c.getContext('2d');
+  let W, H, pts = [];
+  function resize(){ W=c.width=innerWidth; H=c.height=innerHeight; }
+  addEventListener('resize', resize); resize();
+  function r(a,b){ return Math.random()*(b-a)+a; }
+  for(let i=0;i<100;i++){
+    pts.push({x:r(0,W),y:r(0,H),rad:r(0.3,1.8),a:r(0.05,0.35),s:r(0.07,0.28),d:r(-0.1,0.1)});
+  }
+  (function loop(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p=>{
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.rad,0,Math.PI*2);
+      ctx.fillStyle=`rgba(201,146,42,${p.a})`; ctx.fill();
+      p.y-=p.s; p.x+=p.d;
+      if(p.y<-3){p.y=H+3;p.x=r(0,W);}
+    });
+    requestAnimationFrame(loop);
+  })();
+</script>
+
 </body>
 </html>
