@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Something big is coming. Stay tuned."/>
+  <title>PSPK — Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@100;200;300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c9922a;
+      --gold-light: #f0c96a;
+      --gold-dark: #b8821e;
+      --bg: #000000;
+      --text-muted: #888;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Particle Canvas ── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Main Wrapper ── */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: masterFade 1.8s cubic-bezier(.4,0,.2,1) 0.3s forwards;
+    }
+
+    @keyframes masterFade {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Star ── */
+    .star-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .star-halo {
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,146,42,0.18) 0%, transparent 70%);
+      animation: haloBreath 4s ease-in-out infinite;
+    }
+
+    @keyframes haloBreath {
+      0%, 100% { transform: scale(1);   opacity: 0.6; }
+      50%       { transform: scale(1.3); opacity: 1;   }
+    }
+
+    .star {
+      width: 110px;
+      height: 110px;
+      background: linear-gradient(145deg, var(--gold-light), var(--gold), var(--gold-dark));
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      animation: starGlow 4s ease-in-out infinite alternate, starSpin 0.8s cubic-bezier(.4,0,.2,1) both;
+      filter: drop-shadow(0 0 16px rgba(201,146,42,0.5));
+    }
+
+    @keyframes starSpin {
+      from { transform: rotate(-40deg) scale(0.5); opacity: 0; }
+      to   { transform: rotate(0deg)  scale(1);   opacity: 1; }
+    }
+
+    @keyframes starGlow {
+      from { filter: drop-shadow(0 0 8px  rgba(201,146,42,0.4)); }
+      to   { filter: drop-shadow(0 0 30px rgba(240,201,106,1.0)); }
+    }
+
+    /* ── Vertical Line ── */
+    .line {
+      width: 1px;
+      height: 0;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: lineGrow 1.2s cubic-bezier(.4,0,.2,1) 1s forwards;
+    }
+
+    @keyframes lineGrow {
+      from { height: 0;     opacity: 0; }
+      to   { height: 110px; opacity: 1; }
+    }
+
+    /* ── Coming Soon Text ── */
+    .tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: clamp(10px, 1.5vw, 14px);
+      letter-spacing: 0.65em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 36px;
+      opacity: 0;
+      animation: textReveal 1.2s ease 1.8s forwards;
+      text-indent: 0.65em;
+    }
+
+    @keyframes textReveal {
+      from { opacity: 0; letter-spacing: 1.2em; }
+      to   { opacity: 1; letter-spacing: 0.65em; }
+    }
+
+    /* ── Vignette ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles"></canvas>
+
+  <div class="wrapper">
+    <div class="star-wrap">
+      <div class="star-halo"></div>
+      <div class="star"></div>
+    </div>
+    <div class="line"></div>
+    <p class="tagline">Coming Soon&hellip;</p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('particles');
+    const ctx    = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function rand(min, max) { return Math.random() * (max - min) + min; }
+
+    function createParticle() {
+      return {
+        x: rand(0, W),
+        y: rand(0, H),
+        r: rand(0.5, 2.2),
+        alpha: rand(0.1, 0.5),
+        speed: rand(0.1, 0.4),
+        drift: rand(-0.15, 0.15),
+      };
+    }
+
+    for (let i = 0; i < 90; i++) particles.push(createParticle());
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 146, 42, ${p.alpha})`;
+        ctx.fill();
+        p.y -= p.speed;
+        p.x += p.drift;
+        if (p.y < -5) { p.y = H + 5; p.x = rand(0, W); }
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  </script>
+</body>
+</html>
